@@ -47,6 +47,7 @@ class QRScannerFragment : BottomSheetDialogFragment() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var barcodeScanner: BarcodeScanner
     private lateinit var binding: AdminQrScannerBinding
+    private var isProcessing = false
 
      // Register the permissions callback, which handles the user's response to the
 // system permissions dialog. Save the return value, an instance of
@@ -205,30 +206,32 @@ class QRScannerFragment : BottomSheetDialogFragment() {
     }
 
     @OptIn(ExperimentalGetImage::class) private fun processImageProxy(imageProxy: InputImage) {
+        if (!isProcessing) {
+            isProcessing = true
 
             barcodeScanner.process(imageProxy)
                 .addOnSuccessListener { barcodeList ->
-                    val barcode = barcodeList.getOrNull(0)
-                    // `rawValue` is the decoded value of the barcode
-                    barcode?.rawValue?.let {value ->
-                        // update our textView to show the decoded value
-//                        binding.bottomText.text =
-//                            getStringvalue
 
+                    val barcode = barcodeList.getOrNull(0)
+                    if (barcode != null) {
+                        Log.e("BARCODE", barcode.rawValue.orEmpty())
+                    } else {
+                        Log.e("BARCODE", "NO BARCODE FOUND")
+                    }
+
+                    barcode?.rawValue?.let { value ->
+                        // Update your UI or perform actions with the barcode value here
                         Toast.makeText(requireContext(), value, Toast.LENGTH_LONG).show()
                     }
                 }
                 .addOnFailureListener {
-                    // This failure will happen if the barcode scanning model
-                    // fails to download from Google Play Services
                     Log.e("BARCODE", it.message.orEmpty())
-                }.addOnCompleteListener {
-                    // When the image is from CameraX analysis use case, must
-                    // call image.close() on received images when finished
-                    // using them. Otherwise, new images may not be received
-                    // or the camera may stall.
                 }
-        }
+                .addOnCompleteListener {
+                    // Release the lock after processing is complete
+                    isProcessing = false
+                }
+        }        }
 
 
     private fun showSettingsSnackbar() {
