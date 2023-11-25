@@ -14,6 +14,7 @@
             android:id="@+id/tv_itemCode"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:foregroundGravity="center"
             android:gravity="center"
@@ -25,29 +26,40 @@
             android:id="@+id/tv_itemCategory"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="3dp"
             android:layout_weight="1"
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="Umbrella"
             android:textSize="14sp" />
 
-        <!-- Status Dropdown -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColorHint="#FFFFFF"
             android:layout_weight="1"
-            app:cardBackgroundColor="@color/white"
-            app:cardCornerRadius="8dp"
-            app:cardElevation="5dp">
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxCornerRadiusBottomEnd="7dp"
+            app:boxCornerRadiusBottomStart="7dp"
+            app:boxCornerRadiusTopEnd="7dp"
+            app:boxCornerRadiusTopStart="7dp"
+            app:boxStrokeColor="@null"
+            app:boxStrokeWidth="0.75dp"
+            app:boxStrokeWidthFocused="1dp"
+            app:endIconMinSize="2dp"
+            app:endIconTint="#54604F">
 
-            <Spinner
-                android:id="@+id/spinnerStatus"
+            <AutoCompleteTextView
+                android:id="@+id/actv_dropdown_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dropDownWidth="wrap_content"
-                android:dropDownSelector="@android:drawable/arrow_down_float" />
+                android:inputType="none"
+                android:paddingVertical="5dp"
+                android:text="Damaged"
+                android:textSize="10sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.cardview.widget.CardView>
 
     </TableRow>
 </TableLayout>

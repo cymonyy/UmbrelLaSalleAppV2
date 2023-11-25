@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:overrideLibrary="com.google.android.gms.base"
+    >
+
 
     <application
         android:allowBackup="true"
@@ -12,6 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UmbrelLaSalleAppV2"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.mlkit.vision.DEPENDENCIES"
+            android:value="barcode_ui"/>
 
         <activity
             android:name=".EmailVerificationSentActivity"

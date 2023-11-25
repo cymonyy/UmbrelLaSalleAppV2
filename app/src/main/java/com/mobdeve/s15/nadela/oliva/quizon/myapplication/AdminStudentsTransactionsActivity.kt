@@ -13,6 +13,7 @@ import com.google.firebase.firestore.toObject
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.adapters.TransactionsAdapter
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databases.TransactionHelper
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databinding.AdminTransactionsListBinding
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments.QRScannerFragment
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +42,42 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
 
         loadTransactions()
 
+        binding.btnScanTransaction.setOnClickListener {
+            showCameraScannerDialog()
+
+        }
+
+    }
+
+    private fun showCameraScannerDialog() {
+        // Use BottomSheetFragment with view binding
+        val bottomSheetFragment = QRScannerFragment()
+        bottomSheetFragment.setBottomSheetListener(object: QRScannerFragment.BottomSheetListener{
+            override fun onDataSent(requestMode: Boolean, transaction: TransactionModel) {
+//                if (requestMode){
+//                    adapter.addData(transaction)
+//                    recyclerView.smoothScrollToPosition(data.size - 1)
+//                }
+//                else {
+//                    val newlyAddedPosition = data.indexOf(data.first { it.id == transaction.id })
+//                    adapter.updateTransactionItem(newlyAddedPosition, transaction)
+//                    recyclerView.smoothScrollToPosition(newlyAddedPosition)
+//                }
+                Log.d("ADMINTRANSACTIONREQUEST", requestMode.toString())
+                Log.d("ADMINTRANSACTIONITEM", transaction.id)
+                Log.d("ADMINTRANSACTIONITEM", transaction.borrower)
+                Log.d("ADMINTRANSACTIONITEM", transaction.status)
+                Log.d("ADMINTRANSACTIONITEM", transaction.station)
+                Log.d("ADMINTRANSACTIONITEM", transaction.transactionDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.actualReturnDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.expectedReturnDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.requestedItems.toString())
+                Log.d("ADMINTRANSACTIONITEM", transaction.requestNote)
+                Log.d("ADMINTRANSACTIONITEM", transaction.returnNote)
+            }
+
+        })
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
     fun openItemsInventory(view: View?) {
