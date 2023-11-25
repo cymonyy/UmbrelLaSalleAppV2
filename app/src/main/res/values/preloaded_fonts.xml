@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="preloaded_fonts" translatable="false">
+    <array name="preloaded_fonts">
         <item>@font/lato</item>
         <item>@font/lato_bold</item>
+        <item>@font/lato_italic</item>
         <item>@font/lato_light</item>
+        <item>@font/lato_light_italic</item>
+        <item>@font/montserrat_bold</item>
+        <item>@font/montserrat_semibold</item>
     </array>
 </resources>

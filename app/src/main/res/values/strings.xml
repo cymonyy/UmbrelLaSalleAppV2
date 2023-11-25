@@ -1,3 +1,49 @@
 <resources>
     <string name="app_name">UmbrelLaSalle App V2</string>
+    <string-array name="error_general_email_fields">
+        <item>Please input your organization email.</item>
+        <item>Please input a valid and owned organization email.</item>
+    </string-array>
+
+    <string-array name="error_general_pass_fields">
+        <item>Please input a password.</item>
+    </string-array>
+
+    <string-array name="error_register_name">
+        <item>Please input your first name.</item>
+        <item>Please input your last name.</item>
+    </string-array>
+
+    <string-array name="error_register_email">
+        <item>Your email is invalid. Please re-enter an email.</item>
+        <item>A user is already registered with this email. Kindly use another one.</item>
+    </string-array>
+
+    <string-array name="error_register_mobile">
+        <item>Please input your mobile number.</item>
+        <item>Please input a valid mobile number format (e.g., 09123456789).</item>
+    </string-array>
+
+    <string-array name="error_register_password">
+        <item>Your password is too short! Kindly input a longer password.</item>
+    </string-array>
+
+    <string-array name="error_register_confirm_password">
+        <item>Please input confirm your password.</item>
+        <item>Both passwords do not match. Kindly re-enter.</item>
+    </string-array>
+
+    <string name="error_login_email">Invalid credentials or password mismatch. Kindly, check and re-enter.</string>
+    <string name="error_login_pass">Your password does not match with the email. Kindly, check and re-enter.</string>
+    <string name="forgot_password"><u>Forgot Password</u></string>
+
+    <string name="list_borrowed_transactions_status">Status: <b>%s</b></string>
+    <string name="list_borrowed_transactions_station">Station: <b>%s</b></string>
+    <string name="list_borrowed_transactions_days_left"><b>%s</b> Days Left to Return</string>
+
+    <string-array name="stations_list">
+        <item>Gokongwei College of Engineering</item>
+        <item>Br. Andrew Gonzales Hall</item>
+    </string-array>
+
 </resources>

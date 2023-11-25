@@ -2,4 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="gray">#ADADAD</color>
+    <color name="lightGreen">#54C120</color>
+
+    <color name="transaction_approved">#54C220</color>
+    <color name="transaction_requested">#C0AB3A</color>
+    <color name="transaction_denied">#C1213E</color>
+    <color name="transaction_returned">#626161</color>
 </resources>
