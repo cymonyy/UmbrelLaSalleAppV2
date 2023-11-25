@@ -42,11 +42,13 @@ class AdminStudentsTableActivity : AppCompatActivity(){
     fun openItemsInventory(view: View?) {
         val intent = Intent(this, ItemsInventoryActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun openTransactionsPage(view: View?) {
         val intent = Intent(this, AdminStudentsTransactionsActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     private fun underlineText(textView: TextView){

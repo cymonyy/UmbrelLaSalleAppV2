@@ -101,6 +101,7 @@ dependencies {
 //    implementation("com.google.firebase:firebase-analytics:21.5.0")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("androidx.camera:camera-view:1.3.0")
     val appcompatVersion = "1.6.1"
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
@@ -121,7 +122,15 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+    // CameraX dependencies
+    implementation ("androidx.camera:camera-core:1.4.0-alpha02")
+    implementation ("androidx.camera:camera-camera2:1.4.0-alpha02")
+    implementation ("androidx.camera:camera-lifecycle:1.4.0-alpha02")
+
+    //ML Kit Barcode Scanning
+    implementation ("com.google.mlkit:barcode-scanning:17.2.0")
+
+    implementation("com.google.android.gms:play-services-mlkit-barcode-scanning:18.3.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -148,5 +157,16 @@ dependencies {
 
     implementation("com.google.zxing:core:3.4.1")
     implementation("com.journeyapps:zxing-android-embedded:4.3.0")
+
+
+    val fragmentVersion = "1.6.2"
+
+    // Java language implementation
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
+    // Kotlin
+    implementation("androidx.fragment:fragment-ktx:$fragmentVersion")
+    // Testing Fragments in Isolation
+    debugImplementation("androidx.fragment:fragment-testing:$fragmentVersion")
+
 
 }

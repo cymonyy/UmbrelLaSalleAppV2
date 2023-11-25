@@ -5,26 +5,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-   >
+    android:layout_height="600dp"
+    >
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        />
 
-        <FrameLayout
-            android:id="@+id/scanner_view"
-            android:layout_width="match_parent"
-            android:layout_height="514dp"
-            android:layout_marginBottom="1dp"
-            android:background="@color/bronze"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-             />
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        -->
+
+<!--        &lt;!&ndash;        <FrameLayout&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:id="@+id/scanner_view"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_width="match_parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_height="514dp"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:layout_marginBottom="1dp"&ndash;&gt;-->
+<!--        &lt;!&ndash;            android:background="@color/bronze"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintHorizontal_bias="0.0"&ndash;&gt;-->
+<!--        &lt;!&ndash;            app:layout_constraintStart_toStartOf="parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;             />&ndash;&gt;-->
+
+
+<!--    </com.google.android.material.card.MaterialCardView>-->
 
 </FrameLayout>

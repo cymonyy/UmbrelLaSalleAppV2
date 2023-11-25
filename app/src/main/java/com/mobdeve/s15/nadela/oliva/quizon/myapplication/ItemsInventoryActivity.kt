@@ -46,11 +46,13 @@ class ItemsInventoryActivity: AppCompatActivity() {
     fun openStudentsPage(view: View?) {
         val intent = Intent(this, AdminStudentsTableActivity::class.java)
         startActivity(intent)
+        finish()
     }
 
     fun openTransactionsPage(view: View?) {
         val intent = Intent(this, AdminStudentsTransactionsActivity::class.java)
         startActivity(intent)
+        finish()
     }
     private fun loadStockItems(){
         lifecycleScope.launch(Dispatchers.Main) {
