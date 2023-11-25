@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.toObject
+import com.mobdeve.qrscannertemp.activity.QRScannerFragment
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.adapters.TransactionsAdapter
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databases.TransactionHelper
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databinding.AdminTransactionsListBinding
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments.AddTransactionBottomSheetDialogFragment
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,13 +41,59 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
         adapter = TransactionsAdapter(mutableListOf())
         recyclerView.adapter = adapter
 
+        binding.scanTransaction.setOnClickListener {
+            showCameraScannerDialog()
+
+        }
+
         loadTransactions()
 
+    }
+
+    private fun showCameraScannerDialog() {
+        // Use BottomSheetFragment with view binding
+        val bottomSheetFragment = QRScannerFragment()
+        bottomSheetFragment.setBottomSheetListener(object: QRScannerFragment.BottomSheetListener{
+            override fun onDataSent(requestMode: Boolean, transaction: TransactionModel) {
+//                if (requestMode){
+//                    adapter.addData(transaction)
+//                    recyclerView.smoothScrollToPosition(data.size - 1)
+//                }
+//                else {
+//                    val newlyAddedPosition = data.indexOf(data.first { it.id == transaction.id })
+//                    adapter.updateTransactionItem(newlyAddedPosition, transaction)
+//                    recyclerView.smoothScrollToPosition(newlyAddedPosition)
+//                }
+                Log.d("ADMINTRANSACTIONREQUEST", requestMode.toString())
+                Log.d("ADMINTRANSACTIONITEM", transaction.id)
+                Log.d("ADMINTRANSACTIONITEM", transaction.borrower)
+                Log.d("ADMINTRANSACTIONITEM", transaction.status)
+                Log.d("ADMINTRANSACTIONITEM", transaction.station)
+                Log.d("ADMINTRANSACTIONITEM", transaction.transactionDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.actualReturnDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.expectedReturnDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.requestedItems.toString())
+                Log.d("ADMINTRANSACTIONITEM", transaction.requestNote)
+                Log.d("ADMINTRANSACTIONITEM", transaction.returnNote)
+            }
+
+        })
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        
+//        val bottomSheetFragment = AddTransactionBottomSheetDialogFragment(intent.getStringExtra("userID").toString())
+//        bottomSheetFragment.setBottomSheetListener(object : AddTransactionBottomSheetDialogFragment.BottomSheetListener {
+//            override fun onDataSent(transaction: TransactionModel) {
+//                listAdapter.addData(transaction)
+//                recyclerView.smoothScrollToPosition(listAdapter.itemCount - 1)
+//            }
+//        })
+//        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
     fun openItemsInventory(view: View?) {
         val intent = Intent(this, ItemsInventoryActivity::class.java)
         startActivity(intent)
+
     }
 
     fun openStudentsPage(view: View?) {

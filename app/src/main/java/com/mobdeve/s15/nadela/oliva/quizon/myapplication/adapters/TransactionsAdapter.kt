@@ -59,4 +59,14 @@ class TransactionsAdapter (private var transactions: MutableList<TransactionMode
         notifyDataSetChanged()
     }
 
+    fun updateTransactionItem(position: Int, transaction: TransactionModel) {
+        transactions[position] = transaction
+        notifyItemChanged(position)
+    }
+
+    fun addData(transaction: TransactionModel) {
+        this.transactions.add(transaction)
+        notifyItemInserted(this.transactions.size - 1)
+    }
+
 }

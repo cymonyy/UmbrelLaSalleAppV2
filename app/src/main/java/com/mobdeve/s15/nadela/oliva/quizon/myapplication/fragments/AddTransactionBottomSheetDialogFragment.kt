@@ -44,8 +44,6 @@ class AddTransactionBottomSheetDialogFragment (private val userID: String): Bott
 
     //mapping of available items Pair(item:String, selected:Boolean = false)
     private var availableItems: MutableList<MutableMap.MutableEntry<String, Boolean>> = mutableListOf()
-
-
     private var requestedItems: MutableMap<String, String> = mutableMapOf()
     private var mListener: BottomSheetListener? = null
     private var year: Int = 0
