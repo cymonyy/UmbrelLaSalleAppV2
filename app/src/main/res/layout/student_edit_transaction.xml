@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="60dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#5B747C74"
+                android:contextClickable="false"
+                android:gravity="center_horizontal|top"
+                app:strokeWidth="0dp" />
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarSize="0dp"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:scrollbarSize="0dp"
+                    android:scrollbars="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="15dp"
+                        android:paddingBottom="15dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/montserrat_semibold"
+                            android:gravity="center"
+                            android:letterSpacing="0.1"
+                            android:shadowColor="#808080"
+                            android:shadowDx="2"
+                            android:shadowDy="2"
+                            android:shadowRadius="2"
+                            android:text="EDIT TRANSACTION"
+
+                            android:textColor="#54604F"
+                            android:textSize="20sp" />
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp">
+
+                            <TableRow
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <androidx.cardview.widget.CardView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center|center_horizontal|center_vertical"
+                                    android:layout_margin="5dp"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="5dp"
+                                    app:contentPadding="5dp">
+
+                                    <ImageView
+                                        android:id="@+id/iv_QR_Image"
+                                        android:layout_width="100dp"
+                                        android:layout_height="100dp"
+                                        android:layout_gravity="center"
+                                        android:scaleType="fitCenter" />
+                                </androidx.cardview.widget.CardView>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_weight="2"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/lato"
+                                            android:text="Status:"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/tv_transaction_status"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat_bold"
+                                            android:text="Requested"
+                                            android:textSize="12sp"
+                                            android:textStyle="bold" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/lato"
+                                            android:text="Station:"
+                                            android:textSize="12sp" />
+
+                                        <TextView
+                                            android:id="@+id/tv_transaction_station"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/montserrat_bold"
+                                            android:text="Gokongwei College of Engineering"
+                                            android:textSize="12sp"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="2dp"
+                                        android:layout_weight="1"
+                                        android:orientation="vertical">
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/lato"
+                                            android:text="Expected Date of Return:"
+                                            android:textSize="12sp" />
+
+                                        <com.google.android.material.card.MaterialCardView
+                                            android:id="@+id/cv_date_picker_button"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="30dp"
+                                            android:layout_marginTop="5dp"
+                                            app:cardBackgroundColor="#FFFFFF"
+                                            app:cardCornerRadius="5dp"
+                                            app:cardMaxElevation="10dp"
+                                            app:strokeColor="#C9C3CF"
+                                            app:strokeWidth="1dp">
+
+                                            <androidx.constraintlayout.widget.ConstraintLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <TextView
+                                                    android:id="@+id/tv_edit_date"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginStart="15dp"
+                                                    android:fontFamily="@font/montserrat_bold"
+                                                    android:textSize="14sp"
+                                                    android:textStyle="bold"
+                                                    app:layout_constraintBottom_toBottomOf="parent"
+                                                    app:layout_constraintStart_toStartOf="parent"
+                                                    app:layout_constraintTop_toTopOf="parent" />
+
+                                                <ImageView
+                                                    android:layout_width="20dp"
+                                                    android:layout_height="20dp"
+                                                    android:layout_marginEnd="10dp"
+                                                    android:adjustViewBounds="true"
+                                                    android:scaleType="centerInside"
+                                                    app:layout_constraintBottom_toBottomOf="parent"
+                                                    app:layout_constraintEnd_toEndOf="parent"
+                                                    app:layout_constraintTop_toTopOf="parent"
+                                                    app:srcCompat="@drawable/icon_calendar" />
+                                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                        </com.google.android.material.card.MaterialCardView>
+
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                            </TableRow>
+                        </TableLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.75dp"
+                        android:background="#C9C3CF" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:fontFamily="@font/lato_bold"
+                            android:gravity="center"
+                            android:letterSpacing="0.2"
+                            android:text="REQUESTED ITEMS" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_requested_items_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center|center_horizontal"
+                            android:layout_marginHorizontal="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal"
+                            android:visibility="visible" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.75dp"
+                        android:background="#C9C3CF" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato"
+                            android:gravity="center"
+                            android:text="Reason for Request"
+                            android:textSize="12sp" />
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginVertical="5dp"
+                            app:cardBackgroundColor="#FFFFFF"
+                            app:cardCornerRadius="5dp"
+                            app:contentPadding="10dp">
+
+                            <EditText
+                                android:id="@+id/et_request_note"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@null"
+                                android:ems="10"
+                                android:enabled="false"
+                                android:gravity="start|top"
+                                android:inputType="textMultiLine"
+                                android:textColor="#384332"
+                                android:textSize="10sp" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.75dp"
+                        android:background="#C9C3CF" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_save_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:layout_margin="15dp"
+                        app:cardBackgroundColor="#8F4343"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="2dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_save_button_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#AFAFAF"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:gravity="center"
+                                android:letterSpacing="0.165"
+                                android:text="SAVE CHANGES"
+                                android:textColor="#FFFFFF"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_remove_button"
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="15dp"
+                        app:cardBackgroundColor="#8F4343"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="2dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#FFAFAFAF"
+                            android:orientation="vertical"
+                            android:id="@+id/ll_remove_button_content"
+                            >
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:gravity="center"
+                                android:letterSpacing="0.165"
+                                android:text="REMOVE"
+                                android:textColor="#FFFFFF"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
