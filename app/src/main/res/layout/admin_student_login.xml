@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/admin_student_login_background" />
+
+    <include
+        android:id="@+id/cl_back_button"
+        layout="@layout/component_back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginVertical="85dp"
+        android:foregroundGravity="center"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.564">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:strokeWidth="1dp">
+
+            <EditText
+                android:id="@+id/et_login_email"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:backgroundTint="@android:color/transparent"
+                android:drawableStart="@drawable/general_irah_input_line"
+                android:ems="10"
+                android:fontFamily="@font/lato"
+                android:hint="Email"
+                android:inputType="text"
+                android:textSize="14sp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_login_email_error"
+            style="@style/RegisterLoginError"
+            android:paddingHorizontal="10dp"
+            android:text="Please input your email."
+            android:visibility="gone" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true"
+            app:strokeWidth="1dp">
+
+            <EditText
+                android:id="@+id/et_login_password"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:backgroundTint="@android:color/transparent"
+                android:drawableStart="@drawable/general_irah_input_line"
+                android:ems="10"
+                android:fontFamily="@font/lato"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="14sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tv_login_pass_error"
+            style="@style/RegisterLoginError"
+            android:paddingHorizontal="10dp"
+            android:text="Please input your email."
+            android:visibility="gone" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="10dp"
+            android:translationZ="1dp"
+
+            app:cardCornerRadius="20dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true">
+
+            <Button
+                android:id="@+id/bt_proceed"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:background="@drawable/general_irah_gradient_bg"
+                android:padding="0dp"
+                android:text="Login"
+                android:textSize="16sp"
+                app:backgroundTint="@null" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_forgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="3sp"
+            android:elevation="8dp"
+            android:fontFamily="@font/lato"
+            android:gravity="center_horizontal"
+            android:text="@string/forgot_password"
+            android:textColor="#3089BB"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="278dp"
+        android:layout_height="89dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.958"
+        app:srcCompat="@drawable/admin_student_login_heading" />
+</androidx.constraintlayout.widget.ConstraintLayout>

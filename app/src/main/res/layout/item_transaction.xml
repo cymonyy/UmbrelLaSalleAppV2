@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:foregroundGravity="center"
+    android:gravity="center"
+    android:stretchColumns="1,2,3">
+
+    <TableRow>
+        <!-- Code TextView -->
+        <TextView
+            android:id="@+id/tv_itemCode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="KJhds89dklsf89"
+            android:textSize="14sp" />
+
+        <!-- Item TextView -->
+        <TextView
+            android:id="@+id/tv_itemCategory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="Umbrella"
+            android:textSize="14sp" />
+
+        <!-- Status Dropdown -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="5dp">
+
+            <Spinner
+                android:id="@+id/spinnerStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dropDownWidth="wrap_content"
+                android:dropDownSelector="@android:drawable/arrow_down_float" />
+
+        </androidx.cardview.widget.CardView>
+
+    </TableRow>
+</TableLayout>
+
+
+

@@ -1,5 +1,8 @@
 package com.mobdeve.s15.nadela.oliva.quinzon.umbrellasalleapp
 
-class MainActivity : AppCompatActivity() {
+
+class AdminCreateAccountActivity : AppCompatActivity(){
+
+
 
 }
