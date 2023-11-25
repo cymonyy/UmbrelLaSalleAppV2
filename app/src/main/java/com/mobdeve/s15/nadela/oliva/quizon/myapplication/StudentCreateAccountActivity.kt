@@ -1,4 +1,6 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
-class StudentCreateAccountActivity {
+class StudentCreateAccountActivity : AppCompatActivity() {
+
+
 }

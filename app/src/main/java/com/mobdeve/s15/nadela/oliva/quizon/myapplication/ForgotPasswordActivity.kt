@@ -1,4 +1,5 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
-class ForgotPasswordActivity {
+class ForgotPasswordActivity : AppCompatActivity() {
+
 }
