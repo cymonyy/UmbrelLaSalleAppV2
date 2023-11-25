@@ -2,8 +2,11 @@ package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -41,6 +44,9 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
 
         loadTransactions()
 
+        val tvTransactionsLabel: TextView = findViewById(R.id.tvTransactionsLabel)
+        underlineText(tvTransactionsLabel)
+
     }
 
     fun openItemsInventory(view: View?) {
@@ -51,6 +57,12 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
     fun openStudentsPage(view: View?) {
         val intent = Intent(this, AdminStudentsTableActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun underlineText(textView: TextView){
+        val content = SpannableString(textView.text)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        textView.text = content
     }
 
     private fun loadTransactions(){

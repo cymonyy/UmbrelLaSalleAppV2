@@ -94,6 +94,7 @@ dependencies {
 //    implementation("com.google.firebase:firebase-analytics:21.5.0")
 
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
     val appcompatVersion = "1.6.1"
 
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

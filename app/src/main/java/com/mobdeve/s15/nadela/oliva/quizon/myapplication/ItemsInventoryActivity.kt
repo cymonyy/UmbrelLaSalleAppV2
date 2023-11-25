@@ -2,8 +2,11 @@ package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,6 +42,9 @@ class ItemsInventoryActivity: AppCompatActivity() {
         adapter = StockItemAdapter(mutableListOf())
         recyclerView.adapter = adapter
 
+        val tvInventoryItemLabel: TextView = findViewById(R.id.tvItemsInventoryLabel)
+        underlineText(tvInventoryItemLabel)
+
         loadStockItems()
 
     }
@@ -52,6 +58,13 @@ class ItemsInventoryActivity: AppCompatActivity() {
         val intent = Intent(this, AdminStudentsTransactionsActivity::class.java)
         startActivity(intent)
     }
+
+    private fun underlineText(textView: TextView){
+        val content = SpannableString(textView.text)
+        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+        textView.text = content
+    }
+
     private fun loadStockItems(){
         lifecycleScope.launch(Dispatchers.Main) {
             try{
