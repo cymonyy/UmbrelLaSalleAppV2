@@ -23,6 +23,7 @@ class ItemModel {
         this.station = station
     }
 
+    constructor()
 
 
 

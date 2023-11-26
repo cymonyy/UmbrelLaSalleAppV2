@@ -39,12 +39,12 @@ open class QRScannerBottomFragment: BottomSheetDialogFragment() {
 
     private var mListener: BottomSheetListener? = null
     interface BottomSheetListener {
-        fun onDataSent(transaction: TransactionModel)
+        fun onDataSent(requestMode: Boolean, transaction: TransactionModel)
     }
+
     fun setBottomSheetListener(listener: BottomSheetListener) {
         mListener = listener
     }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -77,7 +77,7 @@ open class QRScannerBottomFragment: BottomSheetDialogFragment() {
                 requireActivity().runOnUiThread {
                     //store transaction id here
                     val transactionID = it.text
-//                    launchAdminTransactionFormFragment(transactionID)
+                    launchAdminTransactionFormFragment(transactionID)
                     Toast.makeText(
                         requireContext(),
                         transactionID,
@@ -95,16 +95,17 @@ open class QRScannerBottomFragment: BottomSheetDialogFragment() {
         }
     }
 
-//    private fun launchAdminTransactionFormFragment(transactionID: String) {
-//        val fragment = AdminTransactionFormFragment(transactionID)
-//        val fragmentManager = requireActivity().supportFragmentManager
-//        fragment.show(fragmentManager, tag)
-//
-////        val transaction = fragmentManager.beginTransaction()
-////        transaction.replace(R.id.container, fragment)
-////        transaction.addToBackStack(null)
-////        transaction.commit()
-//    }
+    private fun launchAdminTransactionFormFragment(transactionID: String) {
+        val fragment = AdminTransactionFormFragment(transactionID)
+        fragment.setBottomSheetListener(object : AdminTransactionFormFragment.BottomSheetListener{
+            override fun onDataSent(requestMode: Boolean, transaction: TransactionModel) {
+                mListener?.onDataSent(requestMode, transaction)
+            }
+        })
+        val fragmentManager = requireActivity().supportFragmentManager
+        fragment.show(fragmentManager, tag)
+    }
+
 
 
 

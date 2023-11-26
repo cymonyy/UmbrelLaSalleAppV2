@@ -108,7 +108,7 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                scanCode()
 
-                showBottomSheetDialog()
+                showCameraScannerDialog()
 
             } else {
                 // Camera permission denied, handle accordingly
@@ -130,20 +130,50 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
             requestCameraPermission()
         } else {
 //            showBottomSheetDialog()
-            showBottomSheetDialog()
+            showCameraScannerDialog()
 //            scanCode()
         }
     }
 
 
-    private fun showBottomSheetDialog() {
+    private fun showCameraScannerDialog() {
         // Use BottomSheetFragment with view binding
         val bottomSheetFragment = QRScannerBottomFragment()
-        bottomSheetFragment.setBottomSheetListener(object: QRScannerBottomFragment.BottomSheetListener {
-            override fun onDataSent(transaction: TransactionModel) {
+        bottomSheetFragment.setBottomSheetListener(object: QRScannerBottomFragment.BottomSheetListener{
+            override fun onDataSent(requestMode: Boolean, transaction: TransactionModel) {
+//                if (requestMode){
+//                    adapter.addData(transaction)
+//                    recyclerView.smoothScrollToPosition(data.size - 1)
+//                }
+//                else {
+//                    val newlyAddedPosition = data.indexOf(data.first { it.id == transaction.id })
+//                    adapter.updateTransactionItem(newlyAddedPosition, transaction)
+//                    recyclerView.smoothScrollToPosition(newlyAddedPosition)
+//                }
+                Log.d("ADMINTRANSACTIONREQUEST", requestMode.toString())
+                Log.d("ADMINTRANSACTIONITEM", transaction.id)
+                Log.d("ADMINTRANSACTIONITEM", transaction.borrower)
+                Log.d("ADMINTRANSACTIONITEM", transaction.status)
+                Log.d("ADMINTRANSACTIONITEM", transaction.station)
+                Log.d("ADMINTRANSACTIONITEM", transaction.transactionDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.actualReturnDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.expectedReturnDate)
+                Log.d("ADMINTRANSACTIONITEM", transaction.requestedItems.toString())
+                Log.d("ADMINTRANSACTIONITEM", transaction.requestNote)
+                Log.d("ADMINTRANSACTIONITEM", transaction.returnNote)
             }
+
         })
         bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+
+//        val bottomSheetFragment = AddTransactionBottomSheetDialogFragment(intent.getStringExtra("userID").toString())
+//        bottomSheetFragment.setBottomSheetListener(object : AddTransactionBottomSheetDialogFragment.BottomSheetListener {
+//            override fun onDataSent(transaction: TransactionModel) {
+//                listAdapter.addData(transaction)
+//                recyclerView.smoothScrollToPosition(listAdapter.itemCount - 1)
+//            }
+//        })
+//        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
     }
 
     private fun scanCode() {
