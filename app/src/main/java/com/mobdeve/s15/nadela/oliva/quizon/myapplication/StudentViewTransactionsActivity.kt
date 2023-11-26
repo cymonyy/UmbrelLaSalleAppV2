@@ -1,17 +1,28 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.adapters.ListOfBorrowedTransactionsAdapter
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databases.TransactionsHelper
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databinding.StudentListOfBorrowedTransactionsBinding
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments.AddTransactionBottomSheetDialogFragment
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments.QRScannerBottomFragment
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
+
 
 class StudentViewTransactionsActivity: AppCompatActivity(),  ListOfBorrowedTransactionsAdapter.ScrollToPositionCallback {
 

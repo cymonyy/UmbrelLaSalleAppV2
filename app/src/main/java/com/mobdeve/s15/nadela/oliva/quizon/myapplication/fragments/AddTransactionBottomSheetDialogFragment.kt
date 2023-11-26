@@ -56,15 +56,16 @@ class AddTransactionBottomSheetDialogFragment (private val userID: String): Bott
     interface BottomSheetListener {
         fun onDataSent(transaction: TransactionModel)
     }
+    fun setBottomSheetListener(listener: BottomSheetListener) {
+        mListener = listener
+    }
 
     override fun onResume() {
         super.onResume()
         setupStationDropDownMenu()
     }
 
-    fun setBottomSheetListener(listener: BottomSheetListener) {
-        mListener = listener
-    }
+
 
 
     override fun onCreateView(

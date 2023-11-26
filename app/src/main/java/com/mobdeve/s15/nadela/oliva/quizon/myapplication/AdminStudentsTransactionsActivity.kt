@@ -1,18 +1,28 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.toObject
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanIntentResult
+import com.journeyapps.barcodescanner.ScanOptions
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.adapters.TransactionsAdapter
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databases.TransactionHelper
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databinding.AdminTransactionsListBinding
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments.AddTransactionBottomSheetDialogFragment
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments.QRScannerBottomFragment
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +50,10 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         loadTransactions()
+
+        binding.scanTransaction.setOnClickListener {
+            requestPermission()
+        }
 
     }
 
@@ -81,6 +95,97 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
                 data.add(transaction)
             }
         }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                scanCode()
+
+                showBottomSheetDialog()
+
+            } else {
+                // Camera permission denied, handle accordingly
+                Toast.makeText(
+                    this@AdminStudentsTransactionsActivity,
+                    "Camera permission is required to use the QR scanner",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun requestPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this@AdminStudentsTransactionsActivity,
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestCameraPermission()
+        } else {
+//            showBottomSheetDialog()
+            showBottomSheetDialog()
+//            scanCode()
+        }
+    }
+
+
+    private fun showBottomSheetDialog() {
+        // Use BottomSheetFragment with view binding
+        val bottomSheetFragment = QRScannerBottomFragment()
+        bottomSheetFragment.setBottomSheetListener(object: QRScannerBottomFragment.BottomSheetListener {
+            override fun onDataSent(transaction: TransactionModel) {
+            }
+        })
+        bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+    }
+
+    private fun scanCode() {
+
+        Log.d("OPENSCAN", "HERE")
+        val options: ScanOptions = ScanOptions()
+
+        options.setPrompt("Volume up to flash on")
+        options.setBeepEnabled(true)
+        options.setOrientationLocked(true)
+        options.captureActivity = QRScannerBottomFragment::class.java
+
+        barcodeLauncher.launch(options)
+    }
+
+    private final val barcodeLauncher = registerForActivityResult(ScanContract())
+        { result: ScanIntentResult ->
+            if (result.contents == null) {
+                Log.d("SCANNED", result.contents)
+
+    //                    Toast.makeText(this@MyActivity, "Cancelled", Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(
+                    this@AdminStudentsTransactionsActivity,
+                    "Scanned: " + result.contents,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+
+
+    private fun requestCameraPermission() {
+        ActivityCompat.requestPermissions(
+            this@AdminStudentsTransactionsActivity,
+            arrayOf(Manifest.permission.CAMERA),
+            CAMERA_PERMISSION_REQUEST
+        )
+    }
+
+    companion object {
+        private const val CAMERA_PERMISSION_REQUEST = 100
     }
 
 
