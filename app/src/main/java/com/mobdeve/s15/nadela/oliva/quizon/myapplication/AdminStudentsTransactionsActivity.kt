@@ -1,6 +1,7 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -67,6 +68,7 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun loadTransactions(){
         lifecycleScope.launch(Dispatchers.Main) {
             try{
@@ -79,6 +81,7 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
 
                 processData(documents)
                 adapter.updateData(data)
+                adapter.notifyDataSetChanged();
 
             } catch (e: Exception){
                 Log.e("EXCEPTION", e.message.toString())
@@ -140,16 +143,20 @@ class AdminStudentsTransactionsActivity : AppCompatActivity() {
         // Use BottomSheetFragment with view binding
         val bottomSheetFragment = QRScannerBottomFragment()
         bottomSheetFragment.setBottomSheetListener(object: QRScannerBottomFragment.BottomSheetListener{
+            @SuppressLint("NotifyDataSetChanged")
             override fun onDataSent(requestMode: Boolean, transaction: TransactionModel) {
-//                if (requestMode){
-//                    adapter.addData(transaction)
+                if (requestMode){
+                    adapter.addData(transaction)
+                    adapter.notifyDataSetChanged();
 //                    recyclerView.smoothScrollToPosition(data.size - 1)
-//                }
-//                else {
-//                    val newlyAddedPosition = data.indexOf(data.first { it.id == transaction.id })
-//                    adapter.updateTransactionItem(newlyAddedPosition, transaction)
+                }
+                else {
+                    val newlyAddedPosition = data.indexOf(data.first { it.id == transaction.id })
+                    adapter.updateTransactionItem(newlyAddedPosition, transaction)
+                    adapter.notifyDataSetChanged();
 //                    recyclerView.smoothScrollToPosition(newlyAddedPosition)
-//                }
+                }
+
                 Log.d("ADMINTRANSACTIONREQUEST", requestMode.toString())
                 Log.d("ADMINTRANSACTIONITEM", transaction.id)
                 Log.d("ADMINTRANSACTIONITEM", transaction.borrower)

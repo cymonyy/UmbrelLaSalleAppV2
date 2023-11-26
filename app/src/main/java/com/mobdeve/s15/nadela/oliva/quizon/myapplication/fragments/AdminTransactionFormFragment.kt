@@ -1,6 +1,7 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.util.Log
@@ -37,6 +38,8 @@ class AdminTransactionFormFragment(private val transactionID: String) : BottomSh
     private var mListener: BottomSheetListener? = null
 
 
+
+
     interface BottomSheetListener {
         fun onDataSent(requestMode: Boolean, transaction: TransactionModel)
     }
@@ -71,7 +74,6 @@ class AdminTransactionFormFragment(private val transactionID: String) : BottomSh
             binding.tvDate.text = transaction.expectedReturnDate
 
 
-
             if (transaction.status != "Requested") {
                 binding.tvFormLabel.text = "Return Form"
                 binding.btnApprove.text = "RETURN"
@@ -92,20 +94,54 @@ class AdminTransactionFormFragment(private val transactionID: String) : BottomSh
 
         binding.btnApprove.setOnClickListener {
             val newNote = binding.etNote.text
-
-            updateTransaction(isApprove = true, newNote)
-            //dialogue "r u sure"
-            dismiss()
-
+            confirmTransactionApproval(newNote)
         }
 
         // Add click listener for the "Reject" button
         binding.btnReject.setOnClickListener {
             val newNote = binding.etNote.text
-            updateTransaction(isApprove = false, newNote)
-            //dialogue "r u sure"
-            dismiss()
+            confirmTransactionRejection(newNote)
         }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun confirmTransactionApproval(newNote: Editable) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder
+            .setMessage("Confirming this will immediately reflect to our database.")
+            .setTitle("Halt! You are about to APPROVE this transaction.")
+            .setPositiveButton("Confirm") { dialog, which ->
+                updateTransaction(isApprove = true, newNote)
+                dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                dismiss()
+            }
+            .setIcon(resources.getDrawable(R.drawable.baseline_notification_important_24, null))
+
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun confirmTransactionRejection(newNote: Editable) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder
+            .setMessage("Confirming this will immediately reflect to our database.")
+            .setTitle("Halt! You are about to REJECT this transaction.")
+            .setPositiveButton("Confirm") { dialog, which ->
+                updateTransaction(isApprove = false, newNote)
+                dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                dismiss()
+            }
+            .setIcon(resources.getDrawable(R.drawable.baseline_notification_important_24, null))
+
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -138,18 +174,24 @@ class AdminTransactionFormFragment(private val transactionID: String) : BottomSh
                 newNote.toString()
             )
 
+            Log.d("NEWSTATUS", newTransactionStatus)
+            Log.d("NEWSTATUS", itemStatusMap.toString())
+
             // Update transaction status in Firebase
-//            mListener?.onDataSent(
-//                transaction.status == "Requested",
-//                ItemTransactionHelper.updateTransaction(
-//                    transactionID,
-//                    newTransactionStatus,
-//                    newNote,
-//                    "${calendar.get(Calendar.DAY_OF_MONTH)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}",
-//                    itemStatusMap
-//                )
-//            )
-            mListener?.onDataSent(transaction.status == "Requested", newData)
+            mListener?.onDataSent(
+                transaction.status == "Requested",
+                ItemTransactionHelper.updateTransaction(
+                    transaction.status == "Requested",
+                    transaction.station,
+                    transactionID,
+                    newTransactionStatus,
+                    newNote,
+                    "${calendar.get(Calendar.DAY_OF_MONTH)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.YEAR)}",
+                    transaction.requestedItems.keys,
+                    itemStatusMap
+                )
+            )
+            //mListener?.onDataSent(transaction.status == "Requested", newData)
 
         }
 
@@ -190,6 +232,7 @@ class AdminTransactionFormFragment(private val transactionID: String) : BottomSh
                     if (item != null) {
                         Log.d("ITEMTRANSACTION", item.id)
                         requestItemsWithStatus.add(item)
+                        itemStatusMap[itemID] = item.status
                     }
                 }
 

@@ -9,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.mobdeve.s15.nadela.oliva.quizon.myapplication.holders.TransactionViewHolder
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.R
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databinding.TransactionItemBinding
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.holders.TransactionViewHolder
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
 
 class TransactionsAdapter (private var transactions: MutableList<TransactionModel>) :
@@ -32,12 +32,12 @@ class TransactionsAdapter (private var transactions: MutableList<TransactionMode
         when (transaction.status) {
             "Approved" -> {
                 holder.bind(transaction)
-                holder.itemView.findViewById<CardView>(R.id.cvTransaction).setCardBackgroundColor(
+                holder.itemView.findViewById<CardView>(R.id.cv_admin_transaction).setCardBackgroundColor(
                     Color.parseColor("#54C220"))
             }
             "Returned" -> {
                 holder.bind(transaction)
-                holder.itemView.findViewById<CardView>(R.id.cvTransaction).setCardBackgroundColor(
+                holder.itemView.findViewById<CardView>(R.id.cv_admin_transaction).setCardBackgroundColor(
                     Color.parseColor("#979797"))
             }
             else -> {
@@ -57,6 +57,24 @@ class TransactionsAdapter (private var transactions: MutableList<TransactionMode
     fun updateData(newData: MutableList<TransactionModel>){
         transactions = newData
         notifyDataSetChanged()
+    }
+
+    fun updateTransactionItem(position: Int, transaction: TransactionModel) {
+        transactions[position] = transaction
+        notifyItemChanged(position)
+    }
+
+    fun addData(transaction: TransactionModel) {
+        this.transactions.add(transaction)
+        notifyItemInserted(this.transactions.size - 1)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
 }

@@ -1,7 +1,10 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication.holders
 
 import android.annotation.SuppressLint
+import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mobdeve.s15.nadela.oliva.quizon.myapplication.adapters.TransactionProductItemCardsAdapter
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.databinding.TransactionItemBinding
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
 import java.text.ParseException
@@ -17,6 +20,8 @@ import java.util.Locale
 class TransactionViewHolder (private val binding: TransactionItemBinding):
     RecyclerView.ViewHolder(binding.root) {
 
+    private lateinit var itemsAdapter: TransactionProductItemCardsAdapter
+
     fun bind(transaction: TransactionModel){
         binding.tvTransactionStatusValue.text = transaction.status
         binding.tvTransactionNumberValue.text = transaction.id
@@ -26,8 +31,23 @@ class TransactionViewHolder (private val binding: TransactionItemBinding):
 //        binding.tvUmbrellaValue = transaction.requestedItems
         binding.tvDaysLeftValue.text = daysUntil(transaction.expectedReturnDate)
 
-        binding.cvTransaction.isClickable = transaction.status=="Approved"
+        binding.cvAdminTransaction.isClickable = transaction.status=="Approved"
 
+
+        binding.rvAdminTransactionItems.layoutManager = LinearLayoutManager(this.itemView.context, LinearLayoutManager.HORIZONTAL, false)
+        itemsAdapter = TransactionProductItemCardsAdapter(createRequestedItemsMapping(transaction.requestedItems.keys))
+        binding.rvAdminTransactionItems.adapter = itemsAdapter
+
+    }
+
+    private fun createRequestedItemsMapping(request: MutableSet<String>): MutableList<MutableMap.MutableEntry<String, Boolean>>{
+        val items: MutableList<MutableMap.MutableEntry<String, Boolean>> = mutableListOf()
+        for (x in request){
+            val map = mutableMapOf(x to true)
+            items.add(map.entries.first())
+        }
+
+        return items
     }
 
     private fun daysUntil(expectedReturnDate: String):String{

@@ -58,6 +58,7 @@
                 android:background="@drawable/general_irah_gradient_bg"
                 android:padding="0dp"
                 android:text="Create Your Account"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 app:backgroundTint="@null" />
         </androidx.cardview.widget.CardView>

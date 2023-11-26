@@ -75,6 +75,7 @@
                             android:fontFamily="@font/lato"
                             android:gravity="center"
                             android:text="Select Station to Borrow From:"
+                            android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -100,6 +101,7 @@
                                 android:inputType="none"
                                 android:paddingVertical="5dp"
                                 android:text="Gokongwei College of Engineering"
+                                android:textColor="@color/black"
                                 android:textSize="10sp"
                                 tools:ignore="SmallSp" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -107,9 +109,9 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginLeft="5dp"
                         android:layout_weight="2"
                         android:orientation="vertical">
 
@@ -120,6 +122,7 @@
                             android:fontFamily="@font/lato"
                             android:gravity="center"
                             android:text="Expected Date of Return:"
+                            android:textColor="@color/black"
                             android:textSize="10sp" />
 
                         <com.google.android.material.card.MaterialCardView
@@ -144,6 +147,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=""
+                                    android:textColor="@color/black"
                                     android:textSize="10sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +190,8 @@
                     android:fontFamily="@font/lato_bold"
                     android:gravity="center"
                     android:letterSpacing="0.2"
-                    android:text="AVAILABLE ITEMS" />
+                    android:text="AVAILABLE ITEMS"
+                    android:textColor="@color/black" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_available_items"

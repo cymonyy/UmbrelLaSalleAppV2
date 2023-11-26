@@ -63,6 +63,10 @@ class ListOfBorrowedTransactionsAdapter(private var data: MutableList<Transactio
                 updateTransactionItem(position, transaction)
                 this@ListOfBorrowedTransactionsAdapter.smoothScrollToPosition(position)
             }
+
+            override fun onDeleteData() {
+                removeTransactionItem(position)
+            }
         })
         val fragmentManager = (context as FragmentActivity).supportFragmentManager
         bottomSheetFragment.show(fragmentManager, bottomSheetFragment.tag)
@@ -84,5 +88,14 @@ class ListOfBorrowedTransactionsAdapter(private var data: MutableList<Transactio
         this.data.add(transaction)
         notifyItemInserted(this.data.size - 1)
     }
+
+    fun removeTransactionItem(position: Int) {
+        data.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, data.size)
+    }
+
+
+
 
 }

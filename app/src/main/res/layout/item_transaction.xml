@@ -19,7 +19,8 @@
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="KJhds89dklsf89"
-            android:textSize="14sp" />
+            android:textColor="@color/black"
+            android:textSize="10sp" />
 
         <!-- Item TextView -->
         <TextView
@@ -31,6 +32,7 @@
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="Umbrella"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -56,8 +58,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:paddingVertical="5dp"
-                android:text="Damaged"
-                android:textSize="10sp"/>
+                android:text="Intact"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
 

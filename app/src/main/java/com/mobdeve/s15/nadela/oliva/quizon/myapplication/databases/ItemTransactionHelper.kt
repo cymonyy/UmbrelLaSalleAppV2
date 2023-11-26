@@ -5,6 +5,8 @@ import android.text.Editable
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.toObject
@@ -61,7 +63,7 @@ class ItemTransactionHelper {
 
                 if (request != null) {
                     Log.d("REQUESTITEM", request.itemCategory)
-                    request.id = request.id
+                    request.id = item
                 }
 
                 return@withContext request
@@ -74,31 +76,93 @@ class ItemTransactionHelper {
         @Suppress("UNCHECKED_CAST")
         @Throws(Exception::class)
         suspend fun updateTransaction(
+            requestMode: Boolean,
+            transactionStation: String,
             transactionId: String,
             transactionStatus: String,
             transactionNote: Editable,
             transactionActualDate: String,
+            requestItems: MutableSet<String>,
             itemStatusMap: MutableMap<String, String>) : TransactionModel
         {
             val db = FirebaseFirestore.getInstance()
 
+            var querySnapshot =
+                db.collection("Stations")
+                    .whereEqualTo("name", transactionStation)
+                    .limit(1)
+                    .get().await()
+
+            val stationID = querySnapshot.documents.first().id
+            val references: MutableSet<DocumentReference> = mutableSetOf()
+            for (item in requestItems){
+                querySnapshot = db.collection("Stations")
+                    .document(stationID)
+                    .collection("Stock")
+                    .whereEqualTo("itemCategory", item)
+                    .limit(1)
+                    .get()
+                    .await()
+
+                references.add(querySnapshot.documents.first().reference)
+            }
+
             val snapshot = db.collection("Transactions").document(transactionId).get().await()
-            if (!snapshot.exists()) throw Exception("Service Error Detected!")
+            if (!snapshot.exists()) {
+                Log.d("ERRORUPDATE", "No snapshot")
+                throw Exception("Service Error Detected!")
+            }
 
             val result = db.runTransaction { transaction ->
 
                 // Update item details
-                for ((itemId, status) in itemStatusMap) {
-                    val itemRef = db.collection("Items").document(itemId)
-                    val itemDoc = transaction.get(itemRef)
+                when(transactionStatus) {
+                    "Approved" -> {
+                        for ((itemId, status) in itemStatusMap) {
+                            transaction.update(db.collection("Items").document(itemId), "borrowed", true)
+                            transaction.update(db.collection("Items").document(itemId), "requested", true)
+                            transaction.update(db.collection("Items").document(itemId), "status", status)
+                        }
 
-                    if (itemDoc.exists()) {
-                        // Update borrowed, requested, and status
-                        transaction.update(itemRef, "borrowed", true)
-                        transaction.update(itemRef, "requested", true)
-                        transaction.update(itemRef, "status", status)
+                        //increase borrowed, decrease available
+                        for (reference in references){
+                            reference.update("borrowedCount", FieldValue.increment(1))
+                            reference.update("available", FieldValue.increment(-1))
+                        }
+                    }
+
+                    "Returned" -> {
+                        for ((itemId, status) in itemStatusMap) {
+                            transaction.update(db.collection("Items").document(itemId), "borrowed", false)
+                            transaction.update(db.collection("Items").document(itemId), "requested", false)
+                            transaction.update(db.collection("Items").document(itemId), "status", status)
+                        }
+
+                        //decrease borrowed, increase available
+                        for (reference in references){
+                            reference.update("borrowedCount", FieldValue.increment(-1))
+                            reference.update("available", FieldValue.increment(1))
+                        }
+                    }
+
+                    "Denied" -> {
+                        for ((itemId, status) in itemStatusMap) {
+                            transaction.update(db.collection("Items").document(itemId), "borrowed", false)
+                            transaction.update(db.collection("Items").document(itemId), "requested", false)
+                            transaction.update(db.collection("Items").document(itemId), "status", status)
+                        }
+
+                        if (!requestMode){
+                            //decrease borrowed, increase available
+                            for (reference in references){
+                                reference.update("borrowedCount", FieldValue.increment(-1))
+                                reference.update("available", FieldValue.increment(1))
+                            }
+                        }
                     }
                 }
+
+
 
                 val newData = TransactionModel(
                     snapshot.id,
@@ -127,6 +191,7 @@ class ItemTransactionHelper {
 
             }
                 .addOnFailureListener {
+                    Log.e("ERRORUPDATE", it.stackTraceToString())
                     throw Exception("Service Error Detected!")
                 }
                 .await()

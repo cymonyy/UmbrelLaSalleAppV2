@@ -14,5 +14,7 @@
     <color name="transaction_denied">#C1213E</color>
     <color name="transaction_returned">#626161</color>
 
+    <color name="box_brown">#2B2B2B</color>
+
 
 </resources>

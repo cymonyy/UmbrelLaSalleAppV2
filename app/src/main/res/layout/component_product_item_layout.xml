@@ -38,7 +38,8 @@
         android:layout_marginVertical="5dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Umbrella" />
+        android:text="Umbrella"
+        android:textColor="@color/black" />
 
 
 </LinearLayout>

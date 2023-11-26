@@ -1,6 +1,7 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication.fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
@@ -58,6 +59,8 @@ class EditTransactionBottomSheetDialogFragment (private val transaction: Transac
 
     interface BottomSheetListener {
         fun onDataSent(transaction: TransactionModel)
+
+        fun onDeleteData()
     }
     //
 //    override fun onResume() {
@@ -118,21 +121,24 @@ class EditTransactionBottomSheetDialogFragment (private val transaction: Transac
                 removeButtonContent.setBackgroundResource(R.drawable.student_remove_gradient_background)
 
                 saveButton.setOnClickListener {  saveChanges()}
-                removeButton.setOnClickListener {  }
+                removeButton.setOnClickListener { confirmTransactionRemoval() }
 
             }
             "Denied" -> {
                 removeButtonContent.setBackgroundResource(R.drawable.student_remove_gradient_background)
-                removeButton.setOnClickListener {  }
+                removeButton.setOnClickListener { confirmTransactionRemoval()  }
             }
             "Returned" -> {
                 removeButtonContent.setBackgroundResource(R.drawable.student_remove_gradient_background)
-                removeButton.setOnClickListener {  }
+                removeButton.setOnClickListener { confirmTransactionRemoval()  }
             }
             "Approved" -> {
 
             }
         }
+
+
+
 
 
 
@@ -152,6 +158,26 @@ class EditTransactionBottomSheetDialogFragment (private val transaction: Transac
 //
 //        }
 
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun confirmTransactionRemoval() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+        builder
+            .setMessage("Confirming this will permanently delete your transaction from the database.")
+            .setTitle("Halt! You are about to remove this transaction.")
+            .setPositiveButton("Confirm") { dialog, which ->
+                deleteTransaction()
+                dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                dismiss()
+            }
+            .setIcon(resources.getDrawable(R.drawable.baseline_notification_important_24, null))
+
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     private fun saveChanges(){
@@ -210,6 +236,17 @@ class EditTransactionBottomSheetDialogFragment (private val transaction: Transac
             Log.d("document", availableItems.last().key)
         }
 
+    }
+
+    @Throws(Exception::class)
+    @OptIn(DelicateCoroutinesApi::class)
+    private fun deleteTransaction(){
+        GlobalScope.launch(Dispatchers.Main) {
+
+            TransactionsHelper.deleteStudentTransaction(transaction)
+            mListener?.onDeleteData()
+
+        }
     }
 
     @Throws(Exception::class)
@@ -378,9 +415,16 @@ class EditTransactionBottomSheetDialogFragment (private val transaction: Transac
 
     private fun showQRCode() {
         try {
-            val barcodeEncoder = BarcodeEncoder()
-            val bitmap = barcodeEncoder.encodeBitmap(transaction.id, BarcodeFormat.QR_CODE, 400, 400)
-            qrCodeImageView.setImageBitmap(bitmap)
+            if(transaction.status == "Denied" || transaction.status == "Returned"){
+                qrCodeImageView.setImageResource(R.drawable.icon_error)
+                qrCodeImageView.setBackgroundColor(resources.getColor(R.color.white, null))
+            }
+            else {
+                qrCodeImageView.setBackgroundColor(resources.getColor(R.color.box_brown, null))
+                val barcodeEncoder = BarcodeEncoder()
+                val bitmap = barcodeEncoder.encodeBitmap(transaction.id, BarcodeFormat.QR_CODE, 400, 400)
+                qrCodeImageView.setImageBitmap(bitmap)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

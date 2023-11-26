@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <include
         android:id="@+id/cl_back_button"
@@ -33,6 +34,7 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="25dp"
             android:src="@drawable/general_josh_umbrellasalle_logo" />
 
         <TextView
@@ -43,6 +45,7 @@
             android:fontFamily="@font/lato_bold"
             android:gravity="center_horizontal"
             android:text="OOPS!"
+            android:textColor="@color/black"
             android:textSize="36sp" />
 
         <TextView
@@ -54,11 +57,12 @@
             android:fontFamily="@font/lato_italic"
             android:gravity="center_horizontal"
             android:text="Please contact your supervisor\nto create an account with us."
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
 
-
         <LinearLayout
+            android:id="@+id/ll_proceed_login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">

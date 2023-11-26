@@ -111,6 +111,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lato"
                                             android:text="Status:"
+                                            android:textColor="@color/black"
                                             android:textSize="12sp" />
 
                                         <TextView
@@ -119,6 +120,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/montserrat_bold"
                                             android:text="Requested"
+                                            android:textColor="@color/black"
                                             android:textSize="12sp"
                                             android:textStyle="bold" />
 
@@ -135,6 +137,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lato"
                                             android:text="Station:"
+                                            android:textColor="@color/black"
                                             android:textSize="12sp" />
 
                                         <TextView
@@ -143,6 +146,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/montserrat_bold"
                                             android:text="Gokongwei College of Engineering"
+                                            android:textColor="@color/black"
                                             android:textSize="12sp"
                                             android:textStyle="bold" />
                                     </LinearLayout>
@@ -159,6 +163,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lato"
                                             android:text="Expected Date of Return:"
+                                            android:textColor="@color/black"
                                             android:textSize="12sp" />
 
                                         <com.google.android.material.card.MaterialCardView
@@ -182,6 +187,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_marginStart="15dp"
                                                     android:fontFamily="@font/montserrat_bold"
+                                                    android:textColor="@color/black"
                                                     android:textSize="14sp"
                                                     android:textStyle="bold"
                                                     app:layout_constraintBottom_toBottomOf="parent"
@@ -230,7 +236,8 @@
                             android:fontFamily="@font/lato_bold"
                             android:gravity="center"
                             android:letterSpacing="0.2"
-                            android:text="REQUESTED ITEMS" />
+                            android:text="REQUESTED ITEMS"
+                            android:textColor="@color/black" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_requested_items_view"
@@ -263,6 +270,7 @@
                             android:fontFamily="@font/lato"
                             android:gravity="center"
                             android:text="Reason for Request"
+                            android:textColor="@color/black"
                             android:textSize="12sp" />
 
                         <com.google.android.material.card.MaterialCardView
@@ -283,7 +291,7 @@
                                 android:enabled="false"
                                 android:gravity="start|top"
                                 android:inputType="textMultiLine"
-                                android:textColor="#384332"
+                                android:textColor="@color/black"
                                 android:textSize="10sp" />
                         </com.google.android.material.card.MaterialCardView>
 

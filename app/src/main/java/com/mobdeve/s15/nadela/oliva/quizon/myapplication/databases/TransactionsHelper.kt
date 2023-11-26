@@ -3,7 +3,9 @@ package com.mobdeve.s15.nadela.oliva.quizon.myapplication.databases
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.mobdeve.s15.nadela.oliva.quizon.myapplication.models.TransactionModel
@@ -92,6 +94,50 @@ class TransactionsHelper {
 //
 //
 //        }
+
+        @Throws(Exception::class)
+        suspend fun deleteStudentTransaction(transaction: TransactionModel){
+            val db = FirebaseFirestore.getInstance()
+
+            var querySnapshot =
+                db.collection("Stations")
+                    .whereEqualTo("name", transaction.station)
+                    .limit(1)
+                    .get().await()
+
+            val stationID = querySnapshot.documents.first().id
+            val references: MutableSet<DocumentReference> = mutableSetOf()
+            for (item in transaction.requestedItems.keys){
+                querySnapshot = db.collection("Stations")
+                    .document(stationID)
+                    .collection("Stock")
+                    .whereEqualTo("itemCategory", item)
+                    .limit(1)
+                    .get()
+                    .await()
+
+                references.add(querySnapshot.documents.first().reference)
+            }
+
+            db.runTransaction { runner ->
+
+                //make each item in requests not borrowed and not requested
+                for (itemID in transaction.requestedItems.values){
+                    runner.update(db.collection("Items").document(itemID), "borrowed", false)
+                    runner.update(db.collection("Items").document(itemID), "requested", false)
+                }
+
+                //  DELETE the transaction
+                runner.delete(db.collection("Transactions").document(transaction.id))
+
+            }
+            .addOnFailureListener {
+                throw Exception("Service Error Detected!")
+            }
+            .await()
+        }
+
+
         @Throws(Exception::class)
         suspend fun updateStudentTransaction(
             id: String,
@@ -107,7 +153,9 @@ class TransactionsHelper {
             val snapshot = db.collection("Transactions").document(id).get().await()
             if (!snapshot.exists()) throw Exception("Service Error Detected!")
 
+
             val result = db.runTransaction { transaction ->
+
                 //update document(unselected).requested = false
                 for (item in unselected.values){
                     transaction.update(db.collection("Items").document(item), "requested", false)

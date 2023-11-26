@@ -48,6 +48,7 @@ class ItemsInventoryActivity: AppCompatActivity() {
         startActivity(intent)
     }
 
+
     fun openTransactionsPage(view: View?) {
         val intent = Intent(this, AdminStudentsTransactionsActivity::class.java)
         startActivity(intent)

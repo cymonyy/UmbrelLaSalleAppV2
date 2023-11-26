@@ -1,15 +1,15 @@
 package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TableRow
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginTop
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.toObject
@@ -34,7 +34,6 @@ class AdminStudentsTableActivity : AppCompatActivity(){
         setContentView(binding.root)
 
         val tvStudentsLabel: TextView = findViewById(R.id.tvStudentsLabel)
-        underlineText(tvStudentsLabel)
 
         fetchUsersDataFromFirebase()
     }
@@ -49,11 +48,11 @@ class AdminStudentsTableActivity : AppCompatActivity(){
         startActivity(intent)
     }
 
-    private fun underlineText(textView: TextView){
-        val content = SpannableString(textView.text)
-        content.setSpan(UnderlineSpan(), 0, content.length, 0)
-        textView.text = content
-    }
+//    private fun underlineText(textView: TextView){
+//        val content = SpannableString(textView.text)
+//        content.setSpan(UnderlineSpan(), 0, content.length, 0)
+//        textView.text = content
+//    }
 
     private fun fetchUsersDataFromFirebase() {
         lifecycleScope.launch(Dispatchers.Main) {
@@ -88,6 +87,7 @@ class AdminStudentsTableActivity : AppCompatActivity(){
         val cell = TextView(this)
         cell.text = text
         cell.setBackgroundResource(R.drawable.general_table_border)
+        cell.setTextColor(resources.getColor(R.color.black, null))
         cell.setPadding(10, 10, 10, 10)
 
         cell.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -95,6 +95,7 @@ class AdminStudentsTableActivity : AppCompatActivity(){
         tableRow.addView(cell)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun createTable() {
         for (user in data) {
 
@@ -107,6 +108,7 @@ class AdminStudentsTableActivity : AppCompatActivity(){
                 )
                 tableRow.layoutParams = params
                 tableRow.gravity = Gravity.CENTER
+
                 addCell(tableRow, user.id, 0)
                 addCell(tableRow, "${user.firstName} ${user.lastName}", 1)
 
