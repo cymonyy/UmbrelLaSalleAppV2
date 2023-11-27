@@ -3,6 +3,9 @@ package com.mobdeve.s15.nadela.oliva.quizon.myapplication
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -31,6 +34,7 @@ class StudentViewTransactionsActivity: AppCompatActivity(),  ListOfBorrowedTrans
     private lateinit var listAdapter: ListOfBorrowedTransactionsAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
+    private lateinit var handler: Handler
 
     private var transactionsHelper = TransactionsHelper()
 
@@ -55,7 +59,7 @@ class StudentViewTransactionsActivity: AppCompatActivity(),  ListOfBorrowedTrans
 
         }
 
-        progressBar = viewBinding.progressBar
+//        progressBar = viewBinding.progressBar
 
         transactionsHelper.data.observe(this, Observer { newData ->
             run {
@@ -64,11 +68,33 @@ class StudentViewTransactionsActivity: AppCompatActivity(),  ListOfBorrowedTrans
             }
         })
 
-        // Load data from Firestore
+        // Create a HandlerThread to run background tasks
+        val handlerThread = HandlerThread("BackgroundThread")
+        handlerThread.start()
+
+        // Create a Handler associated with the HandlerThread
+        handler = Handler(handlerThread.looper)
+
+
         loadStudentTransactions()
 
+        viewBinding.btnRefresh.setOnClickListener {
+            runOnUiThread {
+                recyclerView.visibility = View.GONE
+            }
+            Thread.sleep(2000)
+            loadStudentTransactions()
+
+            runOnUiThread {
+                recyclerView.visibility = View.VISIBLE
+            }
+        }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.looper.quitSafely()
+    }
 
     override fun onScrollToPosition(position: Int) {
         recyclerView.smoothScrollToPosition(position)
@@ -89,9 +115,9 @@ class StudentViewTransactionsActivity: AppCompatActivity(),  ListOfBorrowedTrans
 
 
     private fun loadStudentTransactions(){
-        progressBar.visibility = View.VISIBLE
+
         val user = intent.getStringExtra("userID").toString()
         transactionsHelper.getStudentTransactions(user)
-        progressBar.visibility = View.GONE
+
     }
 }
